@@ -1,7 +1,7 @@
 // import { mkdir } from 'node:fs/promises';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 export const actions = {
 	savefiles: async (event) => {
@@ -37,3 +37,10 @@ export const actions = {
 		return { savedFiles };
 	}
 } satisfies Actions;
+
+export const load: PageServerLoad = async ({ fetch }) => {
+	const res = await fetch('/api/files');
+	const json = await res.json();
+
+	return json;
+};

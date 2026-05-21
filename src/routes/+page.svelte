@@ -10,8 +10,9 @@
 
 	let files: PreviewFile[] = $derived(props.data.files);
 
-	async function refetch() {
-		await invalidate('/api/files');
+	function refetch() {
+		invalidate('/api/files');
+		console.log('refetched');
 	}
 </script>
 
@@ -24,7 +25,7 @@
 	class="flex items-center justify-center gap-2 rounded-lg bg-orange-500 px-4 py-3 text-slate-100 transition-all duration-300 hover:bg-orange-600 hover:text-slate-300"
 	><span>reload files</span> <RefreshCw size={18} />
 </button>
-<div class="columns-2 gap-4 space-y-4 p-4 sm:columns-4 md:columns-6 lg:columns-8">
+<div class="w-full columns-2 gap-4 space-y-4 pt-8 sm:columns-4 md:columns-6 lg:columns-8">
 	{#each files as file}
 		<FilePreview {file} />
 	{/each}

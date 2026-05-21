@@ -1,31 +1,30 @@
 <script lang="ts">
 	import { fileSize } from '$lib/file-size';
 	import type { PreviewFile } from '$lib/types/preview-file';
-	import { Download, FileText, Image, Video } from '@lucide/svelte';
+	import { Download, FileText, Image, Music, Video } from '@lucide/svelte';
 	type FilePreviewPros = {
 		file: PreviewFile;
 	};
-	type FileTp = 'IMG' | 'VIDEO' | 'OTHER';
+	type FileTp = 'IMG' | 'VIDEO' | 'AUDIO' | 'OTHER';
 
 	const { file }: FilePreviewPros = $props();
 	let fileType: FileTp = $derived.by(() => {
 		if (file.type.startsWith('image')) return 'IMG';
 		if (file.type.startsWith('video')) return 'VIDEO';
+		if (file.type.startsWith('audio')) return 'AUDIO';
 
 		return 'OTHER';
 	});
 	// const url = $derived(URL.createObjectURL(file));
-
-	function downloadFile() {}
 </script>
 
-<div class="group relative overflow-hidden rounded-lg transition-all duration-300">
+<div class="group relative flex-1 overflow-hidden rounded-lg transition-all duration-300">
 	{#if fileType === 'IMG'}
 		<img src={file.preview} alt={file.name} class="flex-1 object-cover" />
 	{:else if fileType === 'VIDEO'}
 		<video src={file.preview} class="flex-1 object-cover"> <track kind="captions" /></video>
 	{:else}
-		<div class="h-48 w-full bg-slate-100 p-4">
+		<div class="min-h-24 w-full bg-slate-100 p-4">
 			<p class="font-bold text-slate-800">
 				{file.name}
 			</p>
@@ -44,6 +43,8 @@
 						<Image />
 					{:else if fileType === 'VIDEO'}
 						<Video />
+					{:else if fileType === 'AUDIO'}
+						<Music />
 					{:else}
 						<FileText />
 					{/if}
@@ -53,7 +54,6 @@
 
 			<a
 				href="/api/files/preview/{file.name}"
-				target="_blank"
 				class="cursor-pointer rounded bg-transparent p-0.5 text-stone-300 transition duration-200 hover:bg-stone-100 hover:text-stone-800 md:invisible md:group-hover:visible"
 			>
 				<Download class="" />

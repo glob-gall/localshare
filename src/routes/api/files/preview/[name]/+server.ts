@@ -14,7 +14,7 @@ export async function GET({ params }) {
 		return new Response(file, {
 			headers: {
 				'Content-Type': getMimeType(decoded),
-				'Content-Disposition': `inline; filename*=UTF-8''${encodeURIComponent(decoded)}`
+				'Content-Disposition': `attachment; filename*=UTF-8''${encodeURIComponent(decoded)}`
 			}
 		});
 	} catch {

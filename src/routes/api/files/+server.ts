@@ -26,9 +26,10 @@ export async function GET() {
 	const entries = await readdir(uploadDir, { withFileTypes: true });
 
 	const onlyFiles = entries.filter((entry) => entry.isFile());
+	const removegitKeep = onlyFiles.filter((f) => f.name !== '.gitkeep');
 
 	const promises: Promise<PreviewFile>[] = [];
-	for (const file of onlyFiles) {
+	for (const file of removegitKeep) {
 		promises.push(getFileProperties(file));
 	}
 

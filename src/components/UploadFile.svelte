@@ -11,6 +11,7 @@
 	});
 
 	let isUploading = $state(false);
+	let cantUpload = $derived(!files || files.length === 0);
 </script>
 
 <div class="flex flex-col items-center justify-center">
@@ -38,9 +39,9 @@
 		</label>
 		<input id="file" name="file" type="file" bind:files class="hidden" multiple />
 		<button
-			disabled={isUploading}
+			disabled={isUploading || cantUpload}
 			type="submit"
-			class="flex justify-center rounded-lg bg-orange-500 px-4 py-3 text-slate-100 transition-all duration-300 hover:bg-orange-600 hover:text-slate-300"
+			class="flex justify-center rounded-lg bg-orange-500 px-4 py-3 text-slate-100 transition-all duration-300 hover:bg-orange-600 hover:text-slate-300 disabled:cursor-not-allowed disabled:bg-slate-400"
 		>
 			{#if isUploading}
 				<Loader class="animate-spin" />
