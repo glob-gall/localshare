@@ -10,8 +10,8 @@
 
 	let files: PreviewFile[] = $derived(props.data.files);
 
-	function refetch() {
-		invalidate('/api/files');
+	async function refetch() {
+		await invalidate('data:files');
 		console.log('refetched');
 	}
 </script>

@@ -1,4 +1,3 @@
-// import { mkdir } from 'node:fs/promises';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { Actions, PageServerLoad } from './$types';
@@ -11,14 +10,7 @@ export const actions = {
 			(value): value is File => value instanceof File && value.size > 0
 		);
 
-		console.log('/////////////////////////////////////');
-
-		files.forEach((file) => {
-			console.log({ file });
-		});
-		console.log('/////////////////////////////////////');
 		const uploadDir = join(process.cwd(), 'uploads');
-		// await mkdir(uploadDir);
 
 		const savedFiles = await Promise.all(
 			uploadedFiles.map(async (file) => {
@@ -30,15 +22,13 @@ export const actions = {
 				return { url };
 			})
 		);
-		console.log({ uploadDir });
-		console.log({ savedFiles });
-		console.log({ finished: true });
 
 		return { savedFiles };
 	}
 } satisfies Actions;
 
-export const load: PageServerLoad = async ({ fetch }) => {
+export const load: PageServerLoad = async ({ fetch, depends }) => {
+	depends('data:files');
 	const res = await fetch('/api/files');
 	const json = await res.json();
 

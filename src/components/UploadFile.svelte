@@ -33,9 +33,9 @@
 			for="file"
 			class="border- flex items-center justify-center rounded-lg border border-dashed border-slate-300 bg-slate-700 px-12 py-8 transition duration-300 hover:border-orange-600 hover:bg-slate-700/80"
 		>
-			{#if !hasFile}
-				<span>upload file here.</span>
-			{/if}
+			<!-- {#if !hasFile} -->
+			<span class="text-slate-100">upload file here.</span>
+			<!-- {/if} -->
 		</label>
 		<input id="file" name="file" type="file" bind:files class="hidden" multiple />
 		<button
